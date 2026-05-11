@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change-to-Impact | Cosmic Precision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap');
+
+        :root {
+            --color-bg: #020617;
+            --color-primary: #0F172A;
+            --color-accent: #0369A1;
+            --color-starlight: #F8FAFC;
+            --color-muted: #64748b;
+            --font-heading: 'Syncopate', sans-serif;
+            --font-body: 'Space Mono', monospace;
+            --transition-smooth: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-starlight);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- COSMIC BACKGROUND --- */
+        .cosmic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+        }
+
+        .dotted-surface {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: radial-gradient(var(--color-accent) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            animation: drift 60s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .shader-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(3, 105, 161, 0.3) 0%, transparent 70%);
+            filter: blur(60px);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+        }
+
+        /* --- LAYOUT --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--color-starlight);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-accent);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-label {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.3s;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 8vw, 5rem);
+            line-height: 1.1;
+            max-width: 1200px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+
+        .hero-title span {
+            display: block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.6s;
+        }
+
+        .hero-title span:nth-child(2) {
+            color: var(--color-accent);
+            animation-delay: 0.9s !important;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: var(--color-muted);
+            margin-bottom: 50px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 1.2s;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 1.5s;
+        }
+
+        .btn {
+            padding: 18px 36px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border-radius: 0; /* Sharp, industrial edge */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #0ea5e9;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(3, 105, 161, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(248, 250, 252, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-starlight);
+            background: rgba(248, 250, 252, 0.05);
+        }
+
+        /* --- ORBITAL PREVIEW --- */
+        .orbit-container {
+            height: 60vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .orbital-circle {
+            position: absolute;
+            border: 1px solid rgba(3, 105, 161, 0.2);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .circle-1 { width: 300px; height: 300px; animation-duration: 10s; }
+        .circle-2 { width: 600px; height: 600px; animation-duration: 20s; }
+        .circle-3 { width: 900px; height: 900px; animation-duration: 30s; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .precision-marker {
+            position: absolute;
+            font-size: 0.6rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="cosmic-canvas">
+        <div class="dotted-surface"></div>
+        <div class="shader-glow"></div>
+    </div>
+
+    <nav>
+        <div class="logo">Change<span style="color: var(--color-accent);">to</span>Impact</div>
+        <div class="nav-links">
+            <a href="#">Evolution</a>
+            <a href="#">Approach</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">System Sequence: 01 // Evolution</div>
+        <h1 class="hero-title">
+            <span>Veränderung ist</span>
+            <span>die neue Norm.</span>
+        </h1>
+        <p class="hero-description">
+            Wir begleiten Freelancer und kleine Unternehmen dabei, die Evolution ihres Geschäftsmodells nicht nur zu überstehen, sondern sie als Treibstoff für Wachstum zu nutzen. 
+            Präzise. Technologisch. Unaufhaltsam.
+        </p>
+        <div class="cta-group">
+            <button class="btn btn-primary">Evolution starten</button>
+            <button class="btn btn-secondary">Das System verstehen</button>
+        </div>
+    </section>
+
+    <section class="orbit-container">
+        <div class="orbital-circle circle-1"></div>
+        <div class="orbital-circle circle-2"></div>
+        <div class="orbital-circle circle-3"></div>
+        
+        <div class="precision-marker" style="top: 20%; left: 20%;">LAT: 52.37 | LONG: 9.52</div>
+        <div class="precision-marker" style="bottom: 20%; right: 20%;">STATUS: EVOLVING...</div>
+        
+        <div style="text-align: center; z-index: 10; font-family: var(--font-heading); font-size: 0.7rem; opacity: 0.5;">
+            [ INTERACTIVE ORBITAL TIMELINE PREVIEW ]
+        </div>
+    </section>
+
+    <script>
+        // Simple mouse-parallax for the glow
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.shader-glow');
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            glow.style.left = x + 'px';
+            glow.style.top = y + 'px';
+        });
+    </script>
+</body>
+</html>
