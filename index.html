@@ -31,20 +31,19 @@
             overflow-x: hidden;
             min-height: 100vh;
             scroll-behavior: smooth;
-            /* REMOVED background-color here to prevent it from covering the canvas */
-            background: transparent;
+            background-color: var(--color-bg);
         }
 
-        /* --- FAIL-SAFE CINEMATIC BACKGROUND --- */
+        /* --- CINEMATIC BACKGROUND --- */
         .cosmic-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1; /* Must be above body background but below content */
-            background-color: var(--color-bg);
+            z-index: -1;
             overflow: hidden;
+            background-color: var(--color-bg);
         }
 
         .cinematic-bg {
@@ -53,13 +52,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* High-reliability image from a different source to rule out URL blocks */
-            background-image: url('https://images.unsplash.com/photo-1462331940025-496ac30dd666?q=80&w=2025&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1464802686167-1376776ed79d?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             animation: kenburns 40s ease-in-out infinite alternate;
-            opacity: 0.7;
+            opacity: 0.6;
             filter: brightness(0.7) contrast(1.2);
         }
 
@@ -74,7 +72,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Simplified vignette: center is transparent, edges are the background color */
             background: radial-gradient(circle at center, transparent 20%, var(--color-bg) 100%);
             z-index: 1;
             pointer-events: none;
@@ -317,7 +314,7 @@
             background: rgba(15, 23, 42, 0.9);
             border-color: var(--color-accent);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(3, 105, 1 laB a-S, 0.2);
+            box-shadow: 0 10px 30px rgba(3, 105, 161, 0.2);
         }
 
         .bento-item .corner {
@@ -441,12 +438,69 @@
             box-shadow: 0 0 15px var(--color-accent);
         }
 
+        /* --- SPECS SECTION (THE DATA SHEET) --- */
+        #specs {
+            padding: 150px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .spec-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: var(--border-tech);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+        }
+
+        .spec-box:hover {
+            border-color: var(--color-accent);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .spec-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .spec-value {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--color-starlight);
+        }
+
+        .spec-unit {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
         @media (max-width: 768px) {
             .pipeline-container { align-items: center; }
             .pipeline-line { left: 20px; }
             .pipeline-step { flex-direction: column !important; align-items: flex-start; gap: 20px; }
             .step-content { width: calc(100% - 60px); margin-left: 40px; }
             .step-marker { left: 20px; }
+            .specs-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
@@ -567,6 +621,32 @@
                 </div>
                 <div class="step-marker"></div>
                 <div style="width: 45%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specs">
+        <div class="section-label">System Module: 04 // Technical Specifications</div>
+        <div class="specs-grid">
+            <div class="spec-box">
+                <span class="spec-label">Efficiency Gain</span>
+                <span class="spec-value">+40%</span>
+                <span class="spec-unit">Workflow-Optimierung durch systemisches Redesign.</span>
+            </div>
+            <div class="spec-box">
+                <span class="spec-label">Scalability Index</span>
+                <span class="spec-value">Linear</span>
+                <span class="spec-unit">Wachstum ohne exponentiellen Anstieg des Zeitaufwands.</span>
+            </div>
+            <div class="spec-box">
+                <span class="spec-label">Sovereignty Rate</span>
+                <span class="spec-value">100%</span>
+                <span class="spec-unit">Vollständiges Ownership über Ihre technische Infrastruktur.</span>
+            </div>
+            <div class="spec-box">
+                <span class="spec-label">Impact Frequency</span>
+                <span class="spec-value">High</span>
+                <span class="spec-unit">Maximierung der High-Impact Aktivitäten pro Quartal.</span>
             </div>
         </div>
     </section>
