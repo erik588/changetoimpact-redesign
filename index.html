@@ -244,7 +244,7 @@
         .btn-primary:hover {
             background: #0ea5e9;
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(3, 105, 1 laB a-S, 0.5);
+            box-shadow: 0 0 30px rgba(3, 105, 161, 0.5);
         }
 
         .btn-secondary {
@@ -299,7 +299,6 @@
             cursor: pointer;
         }
 
-        /* Tech Texture Overlay for Bento */
         .bento-item::before {
             content: "";
             position: absolute;
@@ -346,18 +345,106 @@
         .span-2-2 { grid-column: span 2; grid-row: span 2; }
         .span-2-1 { grid-column: span 2; }
 
-        @media (max-width: 1024px) {
-            .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto;
-            }
-            .span-2-2, .span-2-1 { grid-column: span 2; grid-row: auto; }
-            .bento-item { height: 300px; }
+        /* --- APPROACH SECTION (PIPELINE) --- */
+        #approach {
+            padding: 150px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pipeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            position: relative;
+        }
+
+        .pipeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-accent), transparent);
+            transform: translateX(-50%);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .pipeline-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .pipeline-step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .step-content {
+            width: 45%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            border: var(--border-tech);
+            padding: 40px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .step-content:hover {
+            border-color: var(--color-accent);
+            background: rgba(15, 23, 42, 0.7);
+            transform: scale(1.02);
+        }
+
+        .step-number {
+            font-family: var(--font-heading);
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .step-title {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            line-height: 1.7;
+        }
+
+        .step-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--color-bg);
+            border: 2px solid var(--color-accent);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 15px var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .pipeline-container { align-items: center; }
+            .pipeline-line { left: 20px; }
+            .pipeline-step { flex-direction: column !important; align-items: flex-start; gap: 20px; }
+            .step-content { width: calc(100% - 60px); margin-left: 40px; }
+            .step-marker { left: 20px; }
         }
 
         @media (max-width: 600px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .span-2-2, .span-2-1 { grid-column: span 1; }
             nav { padding: 20px; }
             .nav-links { display: none; }
         }
@@ -387,7 +474,7 @@
             <a href="#approach">Approach</a>
             <a href="#specs">Specs</a>
             <a href="#contact">Contact</a>
-        </div>
+        </div}
     </nav>
 
     <section class="hero">
@@ -403,7 +490,7 @@
         <div class="cta-group">
             <button class="btn btn-primary">Evolution starten</button>
             <button class="btn btn-secondary">Das System verstehen</button>
-        </div>
+        </div}
     </section>
 
     <section id="evolution">
@@ -439,7 +526,44 @@
                 <div class="bento-title">Skalierbare Logik</div>
                 <div class="bento-desc">Strukturen, die mit Ihnen wachsen. Von Solo-Founder zum impact-getriebenen Unternehmen.</div>
             </div>
-        </div>
+        </div}
+    </section>
+
+    <section id="approach">
+        <div class="section-label">System Sequence: 03 // The Pipeline</div>
+        <div class="pipeline-container">
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-content">
+                    <span class="step-number">Phase 01</span>
+                    <h3 class="step-title">System-Scan</h3>
+                    <p class="step-text">Wir führen eine Tiefenanalyse Ihres aktuellen Geschäftsmodells durch. Wir identifizieren Ineffizienzen, versteckte Potentiale und technologische Blockaden. Keine Vermutungen – nur harte Daten.</p>
+                </div>
+                <div class="step-marker"></div>
+                <div style="width: 45%;"></div>
+            </div>
+
+            <div class="pipeline-step">
+                <div style="width: 45%;"></div>
+                <div class="step-marker"></div>
+                <div class="step-content">
+                    <span class="step-number">Phase 02</span>
+                    <h3 class="step-title">Modell-Evolution</h3>
+                    <p class="step-text">Basierend auf dem Scan entwerfen wir die Evolution Ihres Modells. Wir verschieben Hebel, optimieren Pricing und integrieren skalierbare Prozesse, die Ihr Angebot zukunftssicher machen.</p>
+                </div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-content">
+                    <span class="step-number">Phase 03</span>
+                    <h3 class="step-title">Impact-Ignition</h3>
+                    <p class="step-text">Wir setzen das neue Modell in die Tat um. Durch präzise Implementierung und iterative Optimierung transformieren wir die Theorie in messbaren Markterfolg und Wachstum.</p>
+                </div>
+                <div class="step-marker"></div>
+                <div style="width: 45%;"></div>
+            </div>
+        </div}
     </section>
 
     <script>
