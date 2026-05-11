@@ -31,17 +31,18 @@
             overflow-x: hidden;
             min-height: 100vh;
             scroll-behavior: smooth;
-            background-color: var(--color-bg);
+            /* REMOVED background-color here to prevent it from covering the canvas */
+            background: transparent;
         }
 
-        /* --- ROBUST CINEMATIC BACKGROUND --- */
+        /* --- FAIL-SAFE CINEMATIC BACKGROUND --- */
         .cosmic-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10; /* Deepest layer */
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Must be above body background but below content */
             background-color: var(--color-bg);
             overflow: hidden;
         }
@@ -52,13 +53,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* High-reliability image source */
-            background-image: url('https://images.unsplash.com/photo-1451188373467-57777046663a?q=80&w=2070&auto=format&fit=crop');
+            /* High-reliability image from a different source to rule out URL blocks */
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496ac30dd666?q=80&w=2025&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             animation: kenburns 40s ease-in-out infinite alternate;
-            opacity: 0.6;
+            opacity: 0.7;
             filter: brightness(0.7) contrast(1.2);
         }
 
@@ -67,13 +68,14 @@
             to { transform: scale(1.1); }
         }
 
-        .bg-vignette {
+        .bg-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, transparent 30%, var(--color-bg) 100%);
+            /* Simplified vignette: center is transparent, edges are the background color */
+            background: radial-gradient(circle at center, transparent 20%, var(--color-bg) 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -247,7 +249,7 @@
         .btn-primary:hover {
             background: #0ea5e9;
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(3, 105, 1 laB a-S, 0.5);
+            box-shadow: 0 0 30px rgba(3, 105, 161, 0.5);
         }
 
         .btn-secondary {
@@ -315,7 +317,7 @@
             background: rgba(15, 23, 42, 0.9);
             border-color: var(--color-accent);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(3, 105, 161, 0.2);
+            box-shadow: 0 10px 30px rgba(3, 105, 1 laB a-S, 0.2);
         }
 
         .bento-item .corner {
@@ -465,7 +467,7 @@
 
     <div class="cosmic-canvas">
         <div class="cinematic-bg"></div>
-        <div class="bg-vignette"></div>
+        <div class="bg-overlay"></div>
         <div class="dotted-surface"></div>
         <div class="shader-glow"></div>
     </div>
