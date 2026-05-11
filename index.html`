@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change-to-Impact | Cosmic Precision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap');
+
+        :root {
+            --color-bg: #020617;
+            --color-primary: #0F172A;
+            --color-accent: #0369A1;
+            --color-starlight: #F8FAFC;
+            --color-muted: #64748b;
+            --font-heading: 'Syncopate', sans-serif;
+            --font-body: 'Space Mono', monospace;
+            --transition-smooth: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --border-tech: 1px solid rgba(3, 105, 161, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: var(--color-starlight);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            background-color: var(--color-bg);
+        }
+
+        /* --- CINEMATIC BACKGROUND --- */
+        .cosmic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background-color: var(--color-bg);
+        }
+
+        .cinematic-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Using a high-impact, reliable Galaxy image */
+            background-image: url('https://images.unsplash.com/photo-1464802686167-1376776ed79d?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            animation: kenburns 40s ease-in-out infinite alternate;
+            opacity: 0.6; /* Balanced visibility */
+            filter: contrast(1.2) brightness(0.8);
+        }
+
+        @keyframes kenburns {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Subtle vignette that doesn't kill the image */
+            background: radial-gradient(circle at center, transparent 20%, rgba(2, 6, 23, 0.8) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .dotted-surface {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: radial-gradient(var(--color-accent) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.1;
+            z-index: 2;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            animation: drift 60s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .shader-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(3, 105, 161, 0.2) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+        }
+
+        /* --- LAYOUT --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(248, 250, 252, 0.05);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--color-starlight);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-accent);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-label {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.3s;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 8vw, 5rem);
+            line-height: 1.1;
+            max-width: 1200px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+
+        .hero-title span {
+            display: block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.6s;
+        }
+
+        .hero-title span:nth-child(2) {
+            color: var(--color-accent);
+            animation-delay: 0.9s !important;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: var(--color-muted);
+            margin-bottom: 50px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 1.2s;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 1.5s;
+        }
+
+        .btn {
+            padding: 18px 36px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #0ea5e9;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(3, 105, 161, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(248, 250, 252, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-starlight);
+            background: rgba(248, 250, 252, 0.05);
+        }
+
+        /* --- BENTO GRID SECTION --- */
+        .section-label {
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 60px;
+            display: block;
+        }
+
+        #evolution {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 20px;
+        }
+
+        .bento-item {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: var(--border-tech);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        /* Tech Texture Overlay for Bento */
+        .bento-item::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .bento-item:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(3, 105, 161, 0.2);
+        }
+
+        .bento-item .corner {
+            position: absolute;
+            width: 20px; height: 20px;
+            border: 2px solid var(--color-accent);
+            pointer-events: none;
+        }
+        .tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        .bento-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bento-desc {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .span-2-2 { grid-column: span 2; grid-row: span 2; }
+        .span-2-1 { grid-column: span 2; }
+
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+            .span-2-2, .span-2-1 { grid-column: span 2; grid-row: auto; }
+            .bento-item { height: 300px; }
+        }
+
+        @media (max-width: 600px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .span-2-2, .span-2-1 { grid-column: span 1; }
+            nav { padding: 20px; }
+            .nav-links { display: none; }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="cosmic-canvas">
+        <div class="cinematic-bg"></div>
+        <div class="bg-overlay"></div>
+        <div class="dotted-surface"></div>
+        <div class="shader-glow"></div>
+    </div>
+
+    <nav>
+        <div class="logo">Change<span style="color: var(--color-accent);">to</span>Impact</div>
+        <div class="nav-links">
+            <a href="#evolution">Evolution</a>
+            <a href="#approach">Approach</a>
+            <a href="#specs">Specs</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">System Sequence: 01 // Evolution</div>
+        <h1 class="hero-title">
+            <span style="opacity: 1; transform: translateY(0); animation: none;">Veränderung ist</span>
+            <span style="opacity: 1; transform: translateY(0); animation: none; color: var(--color-accent);">die neue Norm.</span>
+        </h1>
+        <p class="hero-description">
+            Wir begleiten Freelancer und kleine Unternehmen dabei, die Evolution ihres Geschäftsmodells nicht nur zu überstehen, sondern sie als Treibstoff für Wachstum zu nutzen. 
+            Präzise. Technologisch. Unaufhaltsam.
+        </p>
+        <div class="cta-group">
+            <button class="btn btn-primary">Evolution starten</button>
+            <button class="btn btn-secondary">Das System verstehen</button>
+        </div}
+    </section>
+
+    <section id="evolution">
+        <div class="section-label">System Module: 02 // Key Capabilities</div>
+        <div class="bento-grid">
+            <div class="bento-item span-2-2">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Strategische Evolution</div>
+                <div class="bento-desc">Wir analysieren bestehende Geschäftsmodelle und transformieren sie in zukunftssichere Strukturen. Keine Reparatur, sondern ein Upgrade auf das nächste Level.</div>
+            </div>
+            <div class="bento-item">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Technische Präzision</div>
+                <div class="bento-desc">Datengetriebene Entscheidungen statt Bauchgefühl. Wir implementieren Systeme, die skalieren.</div>
+            </div>
+            <div class="bento-item">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Wachstums-Speed</div>
+                <div class="bento-desc">Iterative Prozesse für maximale Geschwindigkeit. Schnellere Markteintritte, effizientere Workflows.</div>
+            </div>
+            <div class="bento-item span-2-1">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Digitale Souveränität</div>
+                <div class="bento-desc">Unabhängigkeit durch technisches Verständnis. Wir bauen Lösungen, die Ihnen gehören, nicht Ihren Tools.</div>
+            </div>
+            <div class="bento-item">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Maximale Wirkung</div>
+                <div class="bento-desc">Fokus auf High-Impact Aktivitäten. Weniger Noise, mehr Resultate.</div>
+            </div>
+            <div class="bento-item">
+                <div class="corner tl"></div><div class="corner br"></div>
+                <div class="bento-title">Skalierbare Logik</div>
+                <div class="bento-desc">Strukturen, die mit Ihnen wachsen. Von Solo-Founder zum impact-getriebenen Unternehmen.</div>
+            </div>
+        </div}
+    </section>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.shader-glow');
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            glow.style.left = x + 'px';
+            glow.style.top = y + 'px';
+        });
+    </script>
+</body>
+</html>
